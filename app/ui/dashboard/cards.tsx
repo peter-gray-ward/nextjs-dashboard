@@ -5,16 +5,16 @@ import {
   InboxIcon,
 } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
+import {
+  fetchCustomers,
+  fetchInvoiceInfo
+} from '@/app/lib/data';
 
-type PriceDisplayProps = {
-  price: number;
-};
-
-function PriceDisplay({ price }: PriceDisplayProps) {
+function PriceDisplay({ price }: any) {
   return <p>{formatToCurrency(price)}</p>;
 }
 
-function formatToCurrency(amount: string|number) {
+function formatToCurrency(amount: any) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -28,22 +28,6 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
-export default async function CardWrapper() {
-  return (
-    <>
-      {/* NOTE: Uncomment this code in Chapter 9 */}
-
-      {/* <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
-      <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
-      /> */}
-    </>
-  );
-}
 
 export function Card({
   title,
@@ -73,5 +57,28 @@ export function Card({
         {value}
       </p>
     </div>
+  );
+}
+
+export default async function CardWrapper() {
+  const [
+    customers,
+    invoiceInfo
+  ] = await Promise.all([
+    fetchCustomers(),
+    fetchInvoiceInfo()
+  ]);
+
+  return (
+    <>
+      <Card title="Collected Invoices" value={invoiceInfo.paid} type="collected" /> 
+      <Card title="Pending Invoices" value={invoiceInfo.pending} type="pending" /> 
+      <Card title="Total Invoices" value={invoiceInfo.total} type="invoices" /> 
+      <Card
+        title="Total Customers"
+        value={customers.length}
+        type="customers"
+      />
+    </>
   );
 }

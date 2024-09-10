@@ -1,25 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Card } from '@/app/ui/dashboard/cards';
+import CardWrapper from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
 import {
-	fetchLatestInvoices,
-	fetchCustomers,
-	fetchInvoiceInfo
+	fetchLatestInvoices
 } from '@/app/lib/data';
 import { Suspense } from 'react';
-import { RevenueChartSkeleton } from '@/app/ui/skeletons';
+import { 
+  RevenueChartSkeleton,
+  CardsSkeleton
+} from '@/app/ui/skeletons';
  
 export default async function Page() {
 	const [
-		latestInvoices,
-		customers,
-		invoiceInfo
+		latestInvoices
 	] = await Promise.all([
-		fetchLatestInvoices(),
-		fetchCustomers(),
-		fetchInvoiceInfo()
+		fetchLatestInvoices()
 	]);
   return (
     <main>
@@ -27,14 +24,9 @@ export default async function Page() {
         Dashboard
       </h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-         <Card title="Collected Invoices" value={invoiceInfo.paid} type="collected" /> 
-         <Card title="Pending Invoices" value={invoiceInfo.pending} type="pending" /> 
-         <Card title="Total Invoices" value={invoiceInfo.total} type="invoices" /> 
-        <Card
-          title="Total Customers"
-          value={customers.length}
-          type="customers"
-        />
+         <Suspense fallback={<CardsSkeleton />}>
+            <CardWrapper />
+         </Suspense>
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
          <Suspense fallback={<RevenueChartSkeleton />}>
