@@ -6,11 +6,15 @@ import {
 } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
 
-function PriceDisplay({ price }: any) {
+type PriceDisplayProps = {
+  price: number;
+};
+
+function PriceDisplay({ price }: PriceDisplayProps) {
   return <p>{formatToCurrency(price)}</p>;
 }
 
-function formatToCurrency(amount: any) {
+function formatToCurrency(amount: string|number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
