@@ -15,7 +15,7 @@ export async function fetchRevenue() {
     // Don't do this in production :)
 
     // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000)); 
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
@@ -45,6 +45,21 @@ export async function fetchLatestInvoices() {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch the latest invoices.');
+  }
+}
+
+export async function fetchInvoiceInfo() {
+  try {
+    const data = await sql`SELECT 
+      COUNT(*) as total,
+      SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) as pending,
+      SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) as paid
+    FROM invoices`;
+    const invoiceInfo = data.rows[0];
+    return invoiceInfo;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch the invoice count.');
   }
 }
 

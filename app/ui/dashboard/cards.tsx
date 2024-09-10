@@ -6,6 +6,17 @@ import {
 } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
 
+function PriceDisplay({ price }) {
+  return <p>{formatToCurrency(price)}</p>;
+}
+
+function formatToCurrency(amount) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(amount);
+}
+
 const iconMap = {
   collected: BanknotesIcon,
   customers: UserGroupIcon,
@@ -40,6 +51,10 @@ export function Card({
   type: 'invoices' | 'customers' | 'pending' | 'collected';
 }) {
   const Icon = iconMap[type];
+
+  if (type == 'pending' || type == 'collected') {
+    value = formatToCurrency(value);
+  }
 
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
