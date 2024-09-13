@@ -194,10 +194,18 @@ export async function fetchCustomers(): Promise<CustomerField[]> {
   }
 }
 
+type FormattedCustomersTableType = Omit<
+  CustomersTableType,
+  "total_pending" | "total_paid"
+> & {
+  total_pending: string; // Assuming formatCurrency returns a string
+  total_paid: string;
+};
+
 export async function fetchFilteredCustomers(
   query: string,
   currentPage: number,
-): Promise<CustomersTableType[]> {
+): Promise<FormattedCustomersTableType[]> {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     const data = await sql<CustomersTableType>`
@@ -225,7 +233,7 @@ export async function fetchFilteredCustomers(
       total_paid: formatCurrency(customer.total_paid),
     }));
 
-    return customers;
+    return customers as FormattedCustomersTableType[];
   } catch (err) {
     console.error("Database Error:", err);
     throw new Error("Failed to fetch customer table.");
