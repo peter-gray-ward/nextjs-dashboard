@@ -7,15 +7,6 @@ import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 
-export type State = {
-  errors?: {
-    customerId?: string[];
-    amount?: string[];
-    status?: string[];
-  };
-  message?: string | null;
-};
-
 const FormSchema = z.object({
   id: z.string(),
   customerId: z.string({
@@ -33,13 +24,18 @@ const FormSchema = z.object({
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
+export type State = {
+  errors?: Record<string, string[]>;
+  message?: string | null;
+};
+
 export async function createInvoice(
   prevState: State,
   formData: FormData,
 ): Promise<{
   errors?: Record<string, string[]>;
   message: string;
-} | void> {
+}> {
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get("customerId"),
     amount: formData.get("amount"),
@@ -71,6 +67,10 @@ export async function createInvoice(
 
   revalidatePath("/dashboard/invoices");
   redirect("/dashboard/invoices");
+
+  return {
+    message: "Invoice created successfully.",
+  };
 }
 
 export async function updateInvoice(
@@ -80,7 +80,7 @@ export async function updateInvoice(
 ): Promise<{
   errors?: Record<string, string[]>;
   message: string;
-} | void> {
+}> {
   const validatedFields = UpdateInvoice.safeParse({
     customerId: formData.get("customerId"),
     amount: formData.get("amount"),
@@ -110,6 +110,10 @@ export async function updateInvoice(
 
   revalidatePath("/dashboard/invoices");
   redirect("/dashboard/invoices");
+
+  return {
+    message: "Invoice edited successfully.",
+  };
 }
 
 export async function deleteInvoice(id: string): Promise<{
@@ -128,10 +132,10 @@ export async function deleteInvoice(id: string): Promise<{
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
-): Promise<string | null> {
+): Promise<string> {
   try {
     await signIn("credentials", formData);
-    return null;
+    return "Successfully authenticated.";
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
