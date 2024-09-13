@@ -1,14 +1,12 @@
+import React from "react";
 import {
   BanknotesIcon,
   ClockIcon,
   UserGroupIcon,
   InboxIcon,
-} from '@heroicons/react/24/outline';
-import { lusitana } from '@/app/ui/fonts';
-import {
-  fetchCustomers,
-  fetchInvoiceInfo
-} from '@/app/lib/data';
+} from "@heroicons/react/24/outline";
+import { lusitana } from "@/app/ui/fonts";
+import { fetchCustomers, fetchInvoiceInfo } from "@/app/lib/data";
 
 const iconMap = {
   collected: BanknotesIcon,
@@ -17,11 +15,10 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
-
-function formatToCurrency(amount: string|number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+function formatToCurrency(amount: string | number): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
   }).format(amount);
 }
 
@@ -32,11 +29,11 @@ export function Card({
 }: {
   title: string;
   value: number | string;
-  type: 'invoices' | 'customers' | 'pending' | 'collected';
-}) {
+  type: "invoices" | "customers" | "pending" | "collected";
+}): JSX.Element {
   const Icon = iconMap[type];
 
-  if (type == 'pending' || type == 'collected') {
+  if (type === "pending" || type === "collected") {
     value = formatToCurrency(value);
   }
 
@@ -56,20 +53,32 @@ export function Card({
   );
 }
 
-export default async function CardWrapper() {
-  const [
-    customers,
-    invoiceInfo
-  ] = await Promise.all([
+export default async function CardWrapper(): JSX.Element {
+  const [customers, invoiceInfo] = await Promise.all([
     fetchCustomers(),
-    fetchInvoiceInfo()
+    fetchInvoiceInfo(),
   ]);
 
   return (
     <>
-      <Card key={0} title="Collected Invoices" value={invoiceInfo.paid} type="collected" /> 
-      <Card key={1} title="Pending Invoices" value={invoiceInfo.pending} type="pending" /> 
-      <Card key={2} title="Total Invoices" value={invoiceInfo.total} type="invoices" /> 
+      <Card
+        key={0}
+        title="Collected Invoices"
+        value={invoiceInfo.paid}
+        type="collected"
+      />
+      <Card
+        key={1}
+        title="Pending Invoices"
+        value={invoiceInfo.pending}
+        type="pending"
+      />
+      <Card
+        key={2}
+        title="Total Invoices"
+        value={invoiceInfo.total}
+        type="invoices"
+      />
       <Card
         key={3}
         title="Total Customers"

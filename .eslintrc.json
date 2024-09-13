@@ -17,12 +17,18 @@
   ],
   "rules": {
     // TypeScript rules
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      { "allowExpressions": true }
+    ],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
     "@typescript-eslint/consistent-type-imports": "warn",
-    
+
     // React rules
     "react-hooks/exhaustive-deps": "error",
     "react/jsx-key": "error",
@@ -44,7 +50,8 @@
     "curly": ["error", "all"],
 
     // Prettier integration
-    "prettier/prettier": ["error", { "singleQuote": true }]
+    "prettier/prettier": "error",
+    "quotes": ["off"] // or set it to allow both
   },
   "settings": {
     "react": {

@@ -1,10 +1,10 @@
-import bcrypt from 'bcrypt';
-import { db } from '@vercel/postgres';
-import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import bcrypt from "bcrypt";
+import { db } from "@vercel/postgres";
+import { invoices, customers, revenue, users } from "../lib/placeholder-data";
 
 const client = await db.connect();
 
-async function seedUsers() {
+async function seedUsers(): Promise<Record<string, string>[]> {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
   await client.sql`
     CREATE TABLE IF NOT EXISTS users (
@@ -29,7 +29,7 @@ async function seedUsers() {
   return insertedUsers;
 }
 
-async function seedInvoices() {
+async function seedInvoices(): Promise<Record<string, string>[]> {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await client.sql`
@@ -55,7 +55,7 @@ async function seedInvoices() {
   return insertedInvoices;
 }
 
-async function seedCustomers() {
+async function seedCustomers(): Promise<Record<string, string>[]> {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await client.sql`
@@ -80,7 +80,7 @@ async function seedCustomers() {
   return insertedCustomers;
 }
 
-async function seedRevenue() {
+async function seedRevenue(): Promise<Record<string, string>[]> {
   await client.sql`
     CREATE TABLE IF NOT EXISTS revenue (
       month VARCHAR(4) NOT NULL UNIQUE,
@@ -101,7 +101,7 @@ async function seedRevenue() {
   return insertedRevenue;
 }
 
-export async function GET() {
+export async function GET(): Promise<Response> {
   try {
     await client.sql`BEGIN`;
     await seedUsers();
@@ -110,7 +110,7 @@ export async function GET() {
     await seedRevenue();
     await client.sql`COMMIT`;
 
-    return Response.json({ message: 'Database seeded successfully' });
+    return Response.json({ message: "Database seeded successfully" });
   } catch (error) {
     await client.sql`ROLLBACK`;
     return Response.json({ error }, { status: 500 });

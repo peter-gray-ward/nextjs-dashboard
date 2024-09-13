@@ -1,13 +1,17 @@
-import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
-import { fetchCustomers } from '@/app/lib/data';
+import React from "react";
+import Image from "next/image";
+import { lusitana } from "@/app/ui/fonts";
+import Search from "@/app/ui/search";
+import { fetchFilteredCustomers } from "@/app/lib/data";
 
 export default async function CustomersTable({
-  query: string,
-  currentPage: number
-}) {
-  const customers = await fetchCustomers();
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+}): JSX.Element {
+  const customers = await fetchFilteredCustomers(query, currentPage);
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
