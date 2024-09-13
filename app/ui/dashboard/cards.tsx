@@ -10,6 +10,13 @@ import {
   fetchInvoiceInfo
 } from '@/app/lib/data';
 
+const iconMap = {
+  collected: BanknotesIcon,
+  customers: UserGroupIcon,
+  pending: ClockIcon,
+  invoices: InboxIcon,
+};
+
 function PriceDisplay({ price }: any) {
   return <p>{formatToCurrency(price)}</p>;
 }
@@ -20,14 +27,6 @@ function formatToCurrency(amount: any) {
     currency: 'USD',
   }).format(amount);
 }
-
-const iconMap = {
-  collected: BanknotesIcon,
-  customers: UserGroupIcon,
-  pending: ClockIcon,
-  invoices: InboxIcon,
-};
-
 
 export function Card({
   title,

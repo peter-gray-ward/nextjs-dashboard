@@ -1,10 +1,6 @@
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
-import {
-  CharactersTableType,
-  FormattedCharactersTable,
-} from '@/app/lib/definitions';
 import { fetchCharacters } from '@/app/lib/data';
 
 export default async function CharactersTable() {
