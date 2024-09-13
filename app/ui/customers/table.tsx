@@ -3,7 +3,10 @@ import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
 import { fetchCustomers } from '@/app/lib/data';
 
-export default async function CustomersTable() {
+export default async function CustomersTable({
+  query: string,
+  currentPage: number
+}) {
   const customers = await fetchCustomers();
   return (
     <div className="w-full">
