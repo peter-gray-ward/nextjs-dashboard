@@ -10,7 +10,7 @@ export default async function CustomersTable({
 }: {
   query: string;
   currentPage: number;
-}): JSX.Element {
+}): Promise<JSX.Element> {
   const customers = await fetchFilteredCustomers(query, currentPage);
   return (
     <div className="w-full">

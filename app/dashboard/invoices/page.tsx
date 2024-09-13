@@ -19,7 +19,7 @@ export default async function Page({
     query?: string;
     page?: string;
   };
-}): JSX.Element {
+}): Promise<JSX.Element> {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
 

@@ -10,7 +10,7 @@ export default async function Page({
   params: {
     id: string;
   };
-}): JSX.Element {
+}): Promise<JSX.Element> {
   const id = params.id;
   const [invoice, customers] = await Promise.all([
     fetchInvoiceById(id),

@@ -7,7 +7,7 @@ import { fetchLatestInvoices } from "@/app/lib/data";
 import { Suspense } from "react";
 import { RevenueChartSkeleton, CardsSkeleton } from "@/app/ui/skeletons";
 
-export default async function Page(): JSX.Element {
+export default async function Page(): Promise<JSX.Element> {
   const [latestInvoices] = await Promise.all([fetchLatestInvoices()]);
   return (
     <main>

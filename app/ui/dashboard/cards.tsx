@@ -53,7 +53,7 @@ export function Card({
   );
 }
 
-export default async function CardWrapper(): JSX.Element {
+export default async function CardWrapper(): Promise<JSX.Element> {
   const [customers, invoiceInfo] = await Promise.all([
     fetchCustomers(),
     fetchInvoiceInfo(),
