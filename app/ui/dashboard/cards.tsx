@@ -17,11 +17,8 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
-function PriceDisplay({ price }: any) {
-  return <p>{formatToCurrency(price)}</p>;
-}
 
-function formatToCurrency(amount: any) {
+function formatToCurrency(amount: string|number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
