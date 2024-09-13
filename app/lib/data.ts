@@ -4,6 +4,7 @@ import type {
   CustomersTableType,
   InvoiceForm,
   InvoicesTable,
+  LatestInvoice,
   Revenue,
 } from "./definitions";
 import { formatCurrency } from "./utils";
