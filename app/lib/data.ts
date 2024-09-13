@@ -19,9 +19,9 @@ export async function fetchRevenue(): Promise<Revenue[]> {
   }
 }
 
-export async function fetchLatestInvoices(): Promise<LatestInvoiceRaw[]> {
+export async function fetchLatestInvoices(): Promise<LatestInvoice[]> {
   try {
-    const data = await sql<LatestInvoiceRaw>`
+    const data = await sql<LatestInvoice>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
       JOIN customers ON invoices.customer_id = customers.id
