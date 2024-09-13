@@ -2,11 +2,53 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "next/typescript"
+    "next/typescript",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "prettier"
   ],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "error",
+    // TypeScript rules
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/consistent-type-imports": "warn",
+    
+    // React rules
     "react-hooks/exhaustive-deps": "error",
-    "react/jsx-key": "error"
+    "react/jsx-key": "error",
+    "react/prop-types": "off", // Since you are using TypeScript for type checking
+    "react/jsx-no-bind": ["warn", { "allowArrowFunctions": true }],
+    "react/jsx-no-target-blank": "error",
+
+    // Accessibility
+    "jsx-a11y/anchor-is-valid": "error",
+    "jsx-a11y/no-autofocus": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+
+    // General JS/TS rules
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-debugger": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "eqeqeq": ["error", "smart"],
+    "curly": ["error", "all"],
+
+    // Prettier integration
+    "prettier/prettier": ["error", { "singleQuote": true }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
