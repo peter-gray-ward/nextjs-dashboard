@@ -70,10 +70,11 @@ export default async function CardWrapper() {
 
   return (
     <>
-      <Card title="Collected Invoices" value={invoiceInfo.paid} type="collected" /> 
-      <Card title="Pending Invoices" value={invoiceInfo.pending} type="pending" /> 
-      <Card title="Total Invoices" value={invoiceInfo.total} type="invoices" /> 
+      <Card key={0} title="Collected Invoices" value={invoiceInfo.paid} type="collected" /> 
+      <Card key={1} title="Pending Invoices" value={invoiceInfo.pending} type="pending" /> 
+      <Card key={2} title="Total Invoices" value={invoiceInfo.total} type="invoices" /> 
       <Card
+        key={3}
         title="Total Customers"
         value={customers.length}
         type="customers"
