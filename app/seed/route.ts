@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
-import { db } from "@vercel/postgres";
+import { db, type QueryResult, type QueryResultRow } from "@vercel/postgres";
 import { invoices, customers, revenue, users } from "../lib/placeholder-data";
 
 const client = await db.connect();
 
-async function seedUsers(): Promise<Record<string, string>[]> {
+async function seedUsers(): Promise<QueryResult<QueryResultRow>[]> {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
   await client.sql`
     CREATE TABLE IF NOT EXISTS users (
@@ -29,7 +29,7 @@ async function seedUsers(): Promise<Record<string, string>[]> {
   return insertedUsers;
 }
 
-async function seedInvoices(): Promise<Record<string, string>[]> {
+async function seedInvoices(): Promise<QueryResult<QueryResultRow>[]> {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await client.sql`
@@ -55,7 +55,7 @@ async function seedInvoices(): Promise<Record<string, string>[]> {
   return insertedInvoices;
 }
 
-async function seedCustomers(): Promise<Record<string, string>[]> {
+async function seedCustomers(): Promise<QueryResult<QueryResultRow>[]> {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await client.sql`
@@ -80,7 +80,7 @@ async function seedCustomers(): Promise<Record<string, string>[]> {
   return insertedCustomers;
 }
 
-async function seedRevenue(): Promise<Record<string, string>[]> {
+async function seedRevenue(): Promise<QueryResult<QueryResultRow>[]> {
   await client.sql`
     CREATE TABLE IF NOT EXISTS revenue (
       month VARCHAR(4) NOT NULL UNIQUE,

@@ -19,7 +19,7 @@ function formatToCurrency(amount: string | number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(amount);
+  }).format(+amount);
 }
 
 export function Card({

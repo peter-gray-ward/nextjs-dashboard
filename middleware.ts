@@ -1,11 +1,12 @@
 import NextAuth from "next-auth";
+import { type NextRequest } from "next/server";
 import { authConfig } from "./auth.config";
 
-export default function middleware(req) {
+export default function middleware(req: NextRequest) {
   const cookies = req.cookies.getAll();
   console.log("Cookies:", cookies);
 
-  return NextAuth(authConfig).auth(req);
+  return NextAuth(authConfig).auth(req as any);
 }
 
 export const config = {
